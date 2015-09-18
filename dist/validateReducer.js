@@ -38,11 +38,9 @@ exports['default'] = function (reducer) {
           } catch (e) {
             throw new Error('Reducer definition object action handler names must be valid action names.');
           }
-
           if (_ramda2['default'].contains(name, actionNames)) {
             throw new Error('Reducer definition object action handler names must be unique.');
           }
-
           if (name !== 'CONSTRUCT') {
             actionNames.push(name);
           }
