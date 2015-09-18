@@ -20,113 +20,57 @@ var _validateAction = require('./validateAction');
 
 var _validateAction2 = _interopRequireDefault(_validateAction);
 
-var isActionMap = undefined,
-    isDomainMap = undefined,
-    iterator = undefined;
+var _ramda = require('ramda');
 
-/**
- * @param {Object.<string, Object>} map
- * @return {Boolean} If every object property value is a plain object.
- */
-isDomainMap = function (map) {
-  return _utils2['default'].every(map, _utils2['default'].isPlainObject);
-};
+var _ramda2 = _interopRequireDefault(_ramda);
 
-/**
- * @param {Object.<string, Function>} map
- * @return {Boolean} If every object property value is a function.
- */
-isActionMap = function (map) {
-  return _utils2['default'].every(map, _utils2['default'].isFunction);
-};
+var _isActionMap = require('./isActionMap');
 
-/**
- * @param {Object} domain
- * @param {Object} action
- * @param {String} action.name
- * @param {Object} collection
- * @param {Object} tapper
- * @return {Object}
- */
-iterator = function (domain, action, collection, tapper) {
-  var newDomain = undefined;
+var _isActionMap2 = _interopRequireDefault(_isActionMap);
 
+var _isDomainMap = require('./isDomainMap');
+
+var _isDomainMap2 = _interopRequireDefault(_isDomainMap);
+
+var iterator = function iterator(domain, action, collection, tapper) {
   if (!_immutable2['default'].Iterable.isIterable(domain)) {
     throw new Error('Domain must be an instance of Immutable.Iterable.');
   }
-
-  newDomain = domain;
-
-  // console.log(`domain`, domain, `action`, action, `definition`, collection)
-
   _utils2['default'].forEach(collection, function (value, domainName) {
-    // console.log(`value`, value, `domain`, domainName, `isActionMap`, isActionMap(value), `isDomainMap`, isDomainMap(value))
-
-    if (isActionMap(value)) {
-      // console.log(`action.name`, action.name, `value[action.name]`, typeof value[action.name])
-
+    if (_isActionMap2['default'](value)) {
       if (value[action.name]) {
-        var result = undefined;
-
         tapper.isActionHandled = true;
-
-        result = value[action.name](newDomain.get(domainName), action);
-
+        var result = value[action.name](domain.get(domainName), action);
         if (!_immutable2['default'].Iterable.isIterable(result)) {
           throw new Error('Reducer must return an instance of Immutable.Iterable. "' + domainName + '" domain "' + action.name + '" action handler result is "' + typeof result + '".');
         }
-
-        newDomain = newDomain.set(domainName, result);
+        domain = domain.set(domainName, result);
       }
-    } else if (isDomainMap(value)) {
-      newDomain = newDomain.set(domainName, iterator(newDomain.get(domainName) || _immutable2['default'].Map(), action, value, tapper));
+    } else if (_isDomainMap2['default'](value)) {
+      domain = domain.set(domainName, iterator(domain.get(domainName) || _immutable2['default'].Map(), action, value, tapper));
     }
   });
-
-  return newDomain;
+  return domain;
 };
-
-/**
- * @param {Object} reducer
- * @return {Function}
- */
 
 exports['default'] = function (reducer) {
   _validateReducer2['default'](reducer);
-
-  /**
-   * @param {Immutable.Iterable} state
-   * @param {Object} action
-   * @return {Immutable.Iterable}
-   */
   return function (state, action) {
-    var newState = undefined,
-        tapper = undefined;
-
     if (!action) {
       throw new Error('Action parameter value must be an object.');
     }
-
-    if (action.type && action.type.indexOf('@@') === 0) {
+    if (action.type && _ramda2['default'].not(_ramda2['default'].contains('@@', action.type))) {
       console.info('Ignoring private action "' + action.type + '". redux-immutable does not support state inflation. Refer to https://github.com/gajus/canonical-reducer-composition/issues/1.');
-
       return state;
     }
-
     _validateAction2['default'](action);
-
-    // Tapper is an object that tracks execution of the action.
-    // @todo Make this an opt-in.
-    tapper = {
+    var tapper = {
       isActionHandled: false
     };
-
-    newState = iterator(state, action, reducer, tapper);
-
+    var newState = iterator(state, action, reducer, tapper);
     if (!tapper.isActionHandled && action.name !== 'CONSTRUCT') {
       console.warn('Unhandled action "' + action.name + '".', action);
     }
-
     return newState;
   };
 };

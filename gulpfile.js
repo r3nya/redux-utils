@@ -1,34 +1,43 @@
-import gulp from 'gulp';
-import mocha from 'gulp-mocha';
-import eslint from 'gulp-eslint';
-import babel from 'gulp-babel';
-import sourcemaps from 'gulp-sourcemaps';
+import gulp from 'gulp'
+import mocha from 'gulp-mocha'
+import eslint from 'gulp-eslint'
+import babel from 'gulp-babel'
+import standard from 'gulp-standard'
+import sourcemaps from 'gulp-sourcemaps'
+
+gulp.task('standard', () => {
+  return gulp.src(['./src/**/*.js'])
+    .pipe(standard())
+    .pipe(standard.reporter('default', {
+      breakOnError: true
+    }))
+})
 
 gulp.task('lint', () => {
-    return gulp
-        .src(['./src/**/*.js', './tests/**/*.js'])
-        .pipe(eslint())
-        .pipe(eslint.format())
-        .pipe(eslint.failOnError());
-});
+  return gulp
+    .src(['./src/**/*.js', './tests/**/*.js'])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failOnError())
+})
 
 gulp.task('test', ['lint'], () => {
-    return gulp
-        .src('./tests/**/*.js')
-        .pipe(mocha());
-});
+  return gulp
+    .src('./tests/**/*.js')
+    .pipe(mocha())
+})
 
 gulp.task('build', ['test'], () => {
-    return gulp
-        .src('./src/**/*.js')
-        .pipe(sourcemaps.init())
-        .pipe(babel())
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('./dist'));
-});
+  return gulp
+    .src('./src/**/*.js')
+    .pipe(sourcemaps.init())
+    .pipe(babel())
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./dist'))
+})
 
 gulp.task('watch', () => {
-    gulp.watch(['./src/**/*', './tests/**/*'], ['default']);
-});
+  gulp.watch(['./src/**/*', './tests/**/*'], ['default'])
+})
 
-gulp.task('default', ['build']);
+gulp.task('default', ['build'])

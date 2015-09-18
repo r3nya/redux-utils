@@ -8,13 +8,8 @@ var _utils = require('./utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-/**
- * @param {Object.<string, Function>} map
- * @return {Boolean} If every object property value is a function.
- */
-
 exports['default'] = function (map) {
-  return _utils2['default'].every(map, _utils2['default'].isFunction);
+    return _utils2['default'].every(map, _utils2['default'].isFunction);
 };
 
 module.exports = exports['default'];
