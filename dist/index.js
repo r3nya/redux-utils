@@ -21,4 +21,10 @@ var _createAction2 = require('./createAction');
 var _createAction3 = _interopRequireDefault(_createAction2);
 
 exports.createAction = _createAction3['default'];
+
+var _combineReducers2 = require('./combineReducers');
+
+var _combineReducers3 = _interopRequireDefault(_combineReducers2);
+
+exports.combineReducers = _combineReducers3['default'];
 //# sourceMappingURL=index.js.map
