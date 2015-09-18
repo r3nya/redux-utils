@@ -3,21 +3,15 @@
 exports.__esModule = true;
 exports['default'] = createAction;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
 function createAction(actionName, payload) {
-  if (_lodash2['default'].isUndefined(payload)) {
+  if (typeof payload === 'undefined' || payload === null || arguments.length === 1) {
     return function () {
       return {
         name: actionName
       };
     };
   }
-  if (_lodash2['default'].isString(payload)) {
+  if (typeof payload === 'string') {
     return function (value) {
       var _data;
 
@@ -27,7 +21,7 @@ function createAction(actionName, payload) {
       };
     };
   }
-  if (_lodash2['default'].isObject(payload)) {
+  if (typeof payload === 'object') {
     return function (value) {
       return {
         name: actionName,
@@ -35,7 +29,7 @@ function createAction(actionName, payload) {
       };
     };
   }
-  if (_lodash2['default'].isFunction(payload)) {
+  if (typeof payload === 'function') {
     return function () {
       return {
         name: actionName,
