@@ -3,15 +3,21 @@
 exports.__esModule = true;
 exports['default'] = createAction;
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 function createAction(actionName, payload) {
-  if (typeof payload === 'undefined' || payload === null || arguments.length == 1) {
+  if (_lodash2['default'].isUndefined(payload)) {
     return function () {
       return {
         name: actionName
       };
     };
   }
-  if (typeof payload === 'string') {
+  if (_lodash2['default'].isString(payload)) {
     return function (value) {
       var _data;
 
@@ -21,7 +27,7 @@ function createAction(actionName, payload) {
       };
     };
   }
-  if (typeof payload === 'object') {
+  if (_lodash2['default'].isObject(payload)) {
     return function (value) {
       return {
         name: actionName,
@@ -29,7 +35,7 @@ function createAction(actionName, payload) {
       };
     };
   }
-  if (typeof payload === 'function') {
+  if (_lodash2['default'].isFunction(payload)) {
     return function () {
       return {
         name: actionName,
@@ -37,7 +43,7 @@ function createAction(actionName, payload) {
       };
     };
   }
-  throw 'Invalid call to createAction, payload needs to be string or function';
+  throw new Error('Invalid call to createAction, payload needs to be string or function');
 }
 
 module.exports = exports['default'];

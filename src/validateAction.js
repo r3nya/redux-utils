@@ -26,7 +26,7 @@ export default (action) => {
     if (!_.has(action.error, 'message')) {
       throw new Error('"error" object must have "message" property.')
     }
-    if (!_.isString(action.error, 'message')) {
+    if (!_.isString(action.error.message)) {
       throw new Error('"error" object "message" property value must be a string.')
     }
   }

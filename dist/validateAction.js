@@ -37,7 +37,7 @@ exports['default'] = function (action) {
     if (!_utils2['default'].has(action.error, 'message')) {
       throw new Error('"error" object must have "message" property.');
     }
-    if (!_utils2['default'].isString(action.error, 'message')) {
+    if (!_utils2['default'].isString(action.error.message)) {
       throw new Error('"error" object "message" property value must be a string.');
     }
   }

@@ -1,19 +1,14 @@
 import _ from './utils'
-
 import validateActionName from './validateActionName'
 import isDomainMap from './isDomainMap'
 import isActionMap from './isActionMap'
+import R from 'ramda'
 
 export default (reducer) => {
-  let actionIndex = []
-
-  if (!isDomainMap(reducer) && _.values(reducer).length) {
+  let actionNames = []
+  if (!isDomainMap(reducer) && _.values(reducer).length > 0) {
     throw new Error('Reducer definition object must begin with a domain definition.')
   }
-
-  /**
-   * @param {Object} branch
-   */
   let iterator = (branch) => {
     _.forEach(branch, (value, domainName) => {
       if (isActionMap(value)) {
@@ -23,13 +18,11 @@ export default (reducer) => {
           } catch (e) {
             throw new Error('Reducer definition object action handler names must be valid action names.')
           }
-
-          if (_.indexOf(actionIndex, name) !== -1) {
+          if (R.contains(name, actionNames)) {
             throw new Error('Reducer definition object action handler names must be unique.')
           }
-
           if (name !== 'CONSTRUCT') {
-            actionIndex.push(name)
+            actionNames.push(name)
           }
         })
       } else if (isDomainMap(value)) {
@@ -39,6 +32,5 @@ export default (reducer) => {
       }
     })
   }
-
   iterator(reducer)
 }
