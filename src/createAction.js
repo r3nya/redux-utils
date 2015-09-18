@@ -1,24 +1,22 @@
-import _ from 'lodash'
-
 export default function createAction (actionName, payload) {
-  if (_.isUndefined(payload)) {
+  if (typeof payload === 'undefined' || payload === null || arguments.length === 1) {
     return () => ({
       name: actionName
     })
   }
-  if (_.isString(payload)) {
+  if (typeof payload === 'string') {
     return (value) => ({
       name: actionName,
       data: {[payload]: value}
     })
   }
-  if (_.isObject(payload)) {
+  if (typeof payload === 'object') {
     return (value) => ({
       name: actionName,
       data: value
     })
   }
-  if (_.isFunction(payload)) {
+  if (typeof payload === 'function') {
     return function (...value) {
       return {
         name: actionName,

@@ -32,14 +32,14 @@ var _isDomainMap = require('./isDomainMap');
 
 var _isDomainMap2 = _interopRequireDefault(_isDomainMap);
 
-var iterator = function iterator(domain, action, collection, tapper) {
+var iterator = function iterator(domain, action, reducersObj, actionTracker) {
   if (!_immutable2['default'].Iterable.isIterable(domain)) {
     throw new Error('Domain must be an instance of Immutable.Iterable.');
   }
-  _utils2['default'].forEach(collection, function (value, domainName) {
+  _utils2['default'].forEach(reducersObj, function (value, domainName) {
     if (_isActionMap2['default'](value)) {
       if (value[action.name]) {
-        tapper.isActionHandled = true;
+        actionTracker.isActionHandled = true;
         var result = value[action.name](domain.get(domainName), action);
         if (!_immutable2['default'].Iterable.isIterable(result)) {
           throw new Error('Reducer must return an instance of Immutable.Iterable. "' + domainName + '" domain "' + action.name + '" action handler result is "' + typeof result + '".');
@@ -47,7 +47,7 @@ var iterator = function iterator(domain, action, collection, tapper) {
         domain = domain.set(domainName, result);
       }
     } else if (_isDomainMap2['default'](value)) {
-      domain = domain.set(domainName, iterator(domain.get(domainName) || _immutable2['default'].Map(), action, value, tapper));
+      domain = domain.set(domainName, iterator(domain.get(domainName) || _immutable2['default'].Map(), action, value, actionTracker));
     }
   });
   return domain;
@@ -64,11 +64,11 @@ exports['default'] = function (reducer) {
       return state;
     }
     _validateAction2['default'](action);
-    var tapper = {
+    var actionTracker = {
       isActionHandled: false
     };
-    var newState = iterator(state, action, reducer, tapper);
-    if (!tapper.isActionHandled && action.name !== 'CONSTRUCT') {
+    var newState = iterator(state, action, reducer, actionTracker);
+    if (!actionTracker.isActionHandled && action.name !== 'CONSTRUCT') {
       console.warn('Unhandled action "' + action.name + '".', action);
     }
     return newState;

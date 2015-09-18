@@ -1,8 +1,7 @@
 import { expect } from 'chai'
-
 import validateReducer from './../src/validateReducer'
-
 import describeThrow from './describeThrow'
+import _ from 'lodash'
 
 describe('validateReducer()', () => {
   describe('when reducer definition object', () => {

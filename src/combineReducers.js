@@ -6,14 +6,14 @@ import R from 'ramda'
 import isActionMap from './isActionMap'
 import isDomainMap from './isDomainMap'
 
-let iterator = (domain, action, collection, tapper) => {
+let iterator = (domain, action, reducersObj, actionTracker) => {
   if (!Immutable.Iterable.isIterable(domain)) {
     throw new Error(`Domain must be an instance of Immutable.Iterable.`)
   }
-  _.forEach(collection, (value, domainName) => {
+  _.forEach(reducersObj, (value, domainName) => {
     if (isActionMap(value)) {
       if (value[action.name]) {
-        tapper.isActionHandled = true
+        actionTracker.isActionHandled = true
         let result = value[action.name](domain.get(domainName), action)
         if (!Immutable.Iterable.isIterable(result)) {
           throw new Error(`Reducer must return an instance of Immutable.Iterable. "${domainName}" domain "${action.name}" action handler result is "${typeof result}".`)
@@ -21,7 +21,7 @@ let iterator = (domain, action, collection, tapper) => {
         domain = domain.set(domainName, result)
       }
     } else if (isDomainMap(value)) {
-      domain = domain.set(domainName, iterator(domain.get(domainName) || Immutable.Map(), action, value, tapper))
+      domain = domain.set(domainName, iterator(domain.get(domainName) || Immutable.Map(), action, value, actionTracker))
     }
   })
   return domain
@@ -38,11 +38,11 @@ export default (reducer) => {
       return state
     }
     validateAction(action)
-    let tapper = {
+    let actionTracker = {
       isActionHandled: false
     }
-    let newState = iterator(state, action, reducer, tapper)
-    if (!tapper.isActionHandled && action.name !== `CONSTRUCT`) {
+    let newState = iterator(state, action, reducer, actionTracker)
+    if (!actionTracker.isActionHandled && action.name !== `CONSTRUCT`) {
       console.warn(`Unhandled action "${action.name}".`, action)
     }
     return newState
