@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import validateActionName from './../src/validateActionName'
+import validateActionName from './../src/validateActionType'
 import describeThrow from './describeThrow'
 
 describe('validateActionName()', () => {

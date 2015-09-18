@@ -1,5 +1,4 @@
 import { expect } from 'chai'
-
 import validateAction from './../src/validateAction'
 import describeThrow from './describeThrow'
 
@@ -21,16 +20,16 @@ describe('validateAction()', () => {
     }
 
     describeValidateActionThrow(
-      'does not define "name" property',
-      'Action definition object must define "name" property.',
+      'does not define "type" property',
+      'Action definition object must define "type" property.',
       {}
     )
 
     describeValidateActionThrow(
-      '"name" property value does not consist only of uppercase alphabetical characters and underscores',
-      'Action definition object "name" property value must be a valid action name.',
+      '"type" property value does not consist only of uppercase alphabetical characters and underscores',
+      'Action definition object "type" property value must be a valid action type.',
       {
-        name: 'lowercase'
+        type: 'lowercase'
       }
     )
 
@@ -38,46 +37,26 @@ describe('validateAction()', () => {
       '"data" property is present and it is not a plain object',
       'Action definition object "data" property value must be a plain object.',
       {
-        name: 'FOO',
+        type: 'FOO',
         data: 'not object'
       }
     )
 
     describeValidateActionThrow(
-      '"metadata" property is present and it is not a plain object',
-      'Action definition object "metadata" property value must be a plain object.',
+      '"meta" property is present and it is not a plain object',
+      'Action definition object "meta" property value must be a plain object.',
       {
-        name: 'FOO',
-        metadata: 'not object'
+        type: 'FOO',
+        meta: 'not object'
       }
     )
 
     describeValidateActionThrow(
-      '"error" property is present and it is not an object',
-      'Action definition object "error" property value must be an object.',
+      '"error" property is present and it is not a Boolean or null',
+      'Action definition object "error" property value must be true, false or null refer to FSA for more info.',
       {
-        name: 'FOO',
-        error: null
-      }
-    )
-
-    describeValidateActionThrow(
-      '"error" object does not define "message" property',
-      '"error" object must have "message" property.',
-      {
-        name: 'FOO',
-        error: {}
-      }
-    )
-
-    describeValidateActionThrow(
-      '"error" object "message" property value is not a string',
-      '"error" object "message" property value must be a string.',
-      {
-        name: 'FOO',
-        error: {
-          message: null
-        }
+        type: 'FOO',
+        error: {notNull: 'foo'}
       }
     )
 
@@ -85,7 +64,7 @@ describe('validateAction()', () => {
       'defines unknown properties',
       'Action definition object must not define unknown properties. "foo" is an unknown property.',
       {
-        name: 'FOO',
+        type: 'FOO',
         foo: 'bar'
       }
     )

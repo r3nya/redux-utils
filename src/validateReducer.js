@@ -1,5 +1,5 @@
 import _ from './utils'
-import validateActionName from './validateActionName'
+import validateActionName from './validateActionType'
 import isDomainMap from './isDomainMap'
 import isActionMap from './isActionMap'
 import R from 'ramda'

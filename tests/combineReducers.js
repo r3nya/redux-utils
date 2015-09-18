@@ -1,7 +1,5 @@
 /* eslint-env mocha */
-
 import { expect } from 'chai'
-
 import Immutable from 'immutable'
 import sinon from 'sinon'
 import combineReducers from './../src/combineReducers'
@@ -23,37 +21,28 @@ describe(`combineReducers`, () => {
   })
   context(`when an instance of a reducer is called with undefined action`, () => {
     let spy
-
     beforeEach(() => {
       spy = sinon.stub(console, `warn`)
     })
     afterEach(() => {
       console.warn.restore()
     })
-    it(`produces console.warn message`, () => {
-      let action,
-        reducer,
-        state
+      it(`produces console.warn message`, () => {
+        let reducer = combineReducers({
+          foos: {
+            FOO: () => {
 
-      reducer = combineReducers({
-        foos: {
-          FOO: () => {
-
+            }
           }
+        })
+        let state = Immutable.Map({})
+        let action = {
+          type: `UNKNOWN`
         }
+        reducer(state, action)
+        expect(spy.calledWith(`Unhandled action "UNKNOWN".`)).to.equal(true)
       })
-
-      state = Immutable.Map({})
-
-      action = {
-        name: `UNKNOWN`
-      }
-
-      reducer(state, action)
-
-      expect(spy.calledWith(`Unhandled action "UNKNOWN".`)).to.equal(true)
-    })
-    context(`when action.name is 'CONSTRUCT'`, () => {
+    context(`when action.type is 'CONSTRUCT'`, () => {
       it(`does not procuce console.warn message`, () => {
         let action,
           reducer,
@@ -70,7 +59,7 @@ describe(`combineReducers`, () => {
         state = Immutable.Map({})
 
         action = {
-          name: `CONSTRUCT`
+          type: `CONSTRUCT`
         }
 
         reducer(state, action)
@@ -88,29 +77,20 @@ describe(`combineReducers`, () => {
     afterEach(() => {
       console.info.restore()
     })
-    it(`produces console.info message`, () => {
-      let action,
-        reducer,
-        state
-
-      reducer = combineReducers({
-        foos: {
-          FOO: () => {
-
+      it(`produces console.info message`, () => {
+        let reducer = combineReducers({
+          foos: {
+            FOO: () => {
+            }
           }
+        })
+        let state = Immutable.Map({})
+        let action = {
+          name: `any`
         }
+        reducer(state, action)
+        expect(spy.calledWithExactly(`Ignoring private action "any". redux-utils does not support name property. Refer to Flux Standard Action`)).to.equal(true)
       })
-
-      state = Immutable.Map({})
-
-      action = {
-        type: `@@redux/INIT`
-      }
-
-      reducer(state, action)
-
-      expect(spy.calledWithExactly(`Ignoring private action "@@redux/INIT". redux-immutable does not support state inflation. Refer to https://github.com/gajus/canonical-reducer-composition/issues/1.`)).to.equal(true)
-    })
   })
   context(`when action handler produces a value thats not an instance of Immutable.Iterable`, () => {
     it(`throws an error`, () => {
@@ -129,10 +109,10 @@ describe(`combineReducers`, () => {
       state = Immutable.Map({})
 
       action = {
-        name: `FOO`
+        type: `FOO`
       }
 
-      // @todo Should name the full domain namespace, e.g. foo.bar.baz.
+      // @todo Should type the full domain typespace, e.g. foo.bar.baz.
 
       expect(() => {
         reducer(state, action)
@@ -159,7 +139,7 @@ describe(`combineReducers`, () => {
         }
       })
 
-      state = reducer(state, {name: `FOO`})
+      state = reducer(state, {type: `FOO`})
 
       expect(state.get(`foos`).get(`bar`)).to.equal(2)
     })
@@ -182,7 +162,7 @@ describe(`combineReducers`, () => {
         }
       })
 
-      reducer(state, {name: `FOO`})
+      reducer(state, {type: `FOO`})
 
       expect(state.get(`foos`).get(`bar`)).to.equal(1)
     })

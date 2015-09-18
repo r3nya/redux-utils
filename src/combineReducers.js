@@ -10,20 +10,20 @@ let iterator = (domain, action, reducersObj, actionTracker) => {
   if (!Immutable.Iterable.isIterable(domain)) {
     throw new Error(`Domain must be an instance of Immutable.Iterable.`)
   }
-  _.forEach(reducersObj, (value, domainName) => {
+  R.mapObjIndexed((value, domainName) => {
     if (isActionMap(value)) {
-      if (value[action.name]) {
+      if (value[action.type]) {
         actionTracker.isActionHandled = true
-        let result = value[action.name](domain.get(domainName), action)
+        let result = value[action.type](domain.get(domainName), action)
         if (!Immutable.Iterable.isIterable(result)) {
-          throw new Error(`Reducer must return an instance of Immutable.Iterable. "${domainName}" domain "${action.name}" action handler result is "${typeof result}".`)
+          throw new Error(`Reducer must return an instance of Immutable.Iterable. "${domainName}" domain "${action.type}" action handler result is "${typeof result}".`)
         }
         domain = domain.set(domainName, result)
       }
     } else if (isDomainMap(value)) {
       domain = domain.set(domainName, iterator(domain.get(domainName) || Immutable.Map(), action, value, actionTracker))
     }
-  })
+  }, reducersObj)
   return domain
 }
 
@@ -33,8 +33,8 @@ export default (reducer) => {
     if (!action) {
       throw new Error(`Action parameter value must be an object.`)
     }
-    if (action.type && R.not(R.contains('@@', action.type))) {
-      console.info(`Ignoring private action "${action.type}". redux-immutable does not support state inflation. Refer to https://github.com/gajus/canonical-reducer-composition/issues/1.`)
+    if (action.name) {
+      console.info(`Ignoring private action "${action.name}". redux-utils does not support name property. Refer to Flux Standard Action`)
       return state
     }
     validateAction(action)
@@ -42,8 +42,8 @@ export default (reducer) => {
       isActionHandled: false
     }
     let newState = iterator(state, action, reducer, actionTracker)
-    if (!actionTracker.isActionHandled && action.name !== `CONSTRUCT`) {
-      console.warn(`Unhandled action "${action.name}".`, action)
+    if (!actionTracker.isActionHandled && action.type !== `CONSTRUCT`) {
+      console.warn(`Unhandled action "${action.type}".`, action)
     }
     return newState
   }

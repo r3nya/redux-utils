@@ -8,9 +8,9 @@ var _utils = require('./utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _validateActionName = require('./validateActionName');
+var _validateActionType = require('./validateActionType');
 
-var _validateActionName2 = _interopRequireDefault(_validateActionName);
+var _validateActionType2 = _interopRequireDefault(_validateActionType);
 
 var _isDomainMap = require('./isDomainMap');
 
@@ -34,7 +34,7 @@ exports['default'] = function (reducer) {
       if (_isActionMap2['default'](value)) {
         _utils2['default'].forEach(value, function (action, name) {
           try {
-            _validateActionName2['default'](name);
+            _validateActionType2['default'](name);
           } catch (e) {
             throw new Error('Reducer definition object action handler names must be valid action names.');
           }

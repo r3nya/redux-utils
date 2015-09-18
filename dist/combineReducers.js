@@ -36,20 +36,20 @@ var iterator = function iterator(domain, action, reducersObj, actionTracker) {
   if (!_immutable2['default'].Iterable.isIterable(domain)) {
     throw new Error('Domain must be an instance of Immutable.Iterable.');
   }
-  _utils2['default'].forEach(reducersObj, function (value, domainName) {
+  _ramda2['default'].mapObjIndexed(function (value, domainName) {
     if (_isActionMap2['default'](value)) {
-      if (value[action.name]) {
+      if (value[action.type]) {
         actionTracker.isActionHandled = true;
-        var result = value[action.name](domain.get(domainName), action);
+        var result = value[action.type](domain.get(domainName), action);
         if (!_immutable2['default'].Iterable.isIterable(result)) {
-          throw new Error('Reducer must return an instance of Immutable.Iterable. "' + domainName + '" domain "' + action.name + '" action handler result is "' + typeof result + '".');
+          throw new Error('Reducer must return an instance of Immutable.Iterable. "' + domainName + '" domain "' + action.type + '" action handler result is "' + typeof result + '".');
         }
         domain = domain.set(domainName, result);
       }
     } else if (_isDomainMap2['default'](value)) {
       domain = domain.set(domainName, iterator(domain.get(domainName) || _immutable2['default'].Map(), action, value, actionTracker));
     }
-  });
+  }, reducersObj);
   return domain;
 };
 
@@ -59,8 +59,8 @@ exports['default'] = function (reducer) {
     if (!action) {
       throw new Error('Action parameter value must be an object.');
     }
-    if (action.type && _ramda2['default'].not(_ramda2['default'].contains('@@', action.type))) {
-      console.info('Ignoring private action "' + action.type + '". redux-immutable does not support state inflation. Refer to https://github.com/gajus/canonical-reducer-composition/issues/1.');
+    if (action.name) {
+      console.info('Ignoring private action "' + action.name + '". redux-utils does not support name property. Refer to Flux Standard Action');
       return state;
     }
     _validateAction2['default'](action);
@@ -68,8 +68,8 @@ exports['default'] = function (reducer) {
       isActionHandled: false
     };
     var newState = iterator(state, action, reducer, actionTracker);
-    if (!actionTracker.isActionHandled && action.name !== 'CONSTRUCT') {
-      console.warn('Unhandled action "' + action.name + '".', action);
+    if (!actionTracker.isActionHandled && action.type !== 'CONSTRUCT') {
+      console.warn('Unhandled action "' + action.type + '".', action);
     }
     return newState;
   };
