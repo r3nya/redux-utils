@@ -1,25 +1,25 @@
 export default function createAction (actionName, payload) {
   if (typeof payload === 'undefined' || payload === null || arguments.length === 1) {
     return () => ({
-      name: actionName
+      type: actionName
     })
   }
   if (typeof payload === 'string') {
     return (value) => ({
-      name: actionName,
+      type: actionName,
       data: {[payload]: value}
     })
   }
   if (typeof payload === 'object') {
     return (value) => ({
-      name: actionName,
+      type: actionName,
       data: value
     })
   }
   if (typeof payload === 'function') {
     return function (...value) {
       return {
-        name: actionName,
+        type: actionName,
         data: payload(...value)
       }
     }

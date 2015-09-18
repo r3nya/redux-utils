@@ -12,10 +12,6 @@ var _validateActionType = require('./validateActionType');
 
 var _validateActionType2 = _interopRequireDefault(_validateActionType);
 
-var _ramda = require('ramda');
-
-var _ramda2 = _interopRequireDefault(_ramda);
-
 exports['default'] = function (action) {
   if (!_utils2['default'].isPlainObject(action)) {
     throw new Error('Action definition must be a plain object.');
@@ -26,6 +22,7 @@ exports['default'] = function (action) {
   try {
     _validateActionType2['default'](action.type);
   } catch (e) {
+    console.log(action);
     throw new Error('Action definition object "type" property value must be a valid action type.');
   }
   if (!_utils2['default'].isUndefined(action.data) && !_utils2['default'].isPlainObject(action.data)) {

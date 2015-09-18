@@ -26,13 +26,13 @@ var _ramda2 = _interopRequireDefault(_ramda);
 
 exports['default'] = function (reducer) {
   var actionNames = [];
-  if (!_isDomainMap2['default'](reducer) && _utils2['default'].values(reducer).length > 0) {
+  if (!_isDomainMap2['default'](reducer) && _ramda2['default'].values(reducer).length > 0) {
     throw new Error('Reducer definition object must begin with a domain definition.');
   }
   var iterator = function iterator(branch) {
-    _utils2['default'].forEach(branch, function (value, domainName) {
+    _ramda2['default'].mapObjIndexed(function (value, domainName) {
       if (_isActionMap2['default'](value)) {
-        _utils2['default'].forEach(value, function (action, name) {
+        _ramda2['default'].mapObjIndexed(function (action, name) {
           try {
             _validateActionType2['default'](name);
           } catch (e) {
@@ -44,13 +44,13 @@ exports['default'] = function (reducer) {
           if (name !== 'CONSTRUCT') {
             actionNames.push(name);
           }
-        });
+        }, value);
       } else if (_isDomainMap2['default'](value)) {
         iterator(branch[domainName]);
       } else {
         throw new Error('Reducer definition object value object all values must correspond to a function (action map) or an object (domain).');
       }
-    });
+    }, branch);
   };
   iterator(reducer);
 };

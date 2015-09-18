@@ -4,10 +4,6 @@ exports.__esModule = true;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _utils = require('./utils');
-
-var _utils2 = _interopRequireDefault(_utils);
-
 var _immutable = require('immutable');
 
 var _immutable2 = _interopRequireDefault(_immutable);
@@ -32,18 +28,20 @@ var _isDomainMap = require('./isDomainMap');
 
 var _isDomainMap2 = _interopRequireDefault(_isDomainMap);
 
-var iterator = function iterator(domain, action, reducersObj, actionTracker) {
-  if (!_immutable2['default'].Iterable.isIterable(domain)) {
-    throw new Error('Domain must be an instance of Immutable.Iterable.');
+var immutableIterableCheck = function immutableIterableCheck(collection, message) {
+  if (!_immutable2['default'].Iterable.isIterable(collection)) {
+    throw new Error(message);
   }
+};
+
+var iterator = function iterator(domain, action, reducersObj, actionTracker) {
+  immutableIterableCheck(domain, 'Domain must be an instance of Immutable.Iterable.');
   _ramda2['default'].mapObjIndexed(function (value, domainName) {
     if (_isActionMap2['default'](value)) {
       if (value[action.type]) {
         actionTracker.isActionHandled = true;
         var result = value[action.type](domain.get(domainName), action);
-        if (!_immutable2['default'].Iterable.isIterable(result)) {
-          throw new Error('Reducer must return an instance of Immutable.Iterable. "' + domainName + '" domain "' + action.type + '" action handler result is "' + typeof result + '".');
-        }
+        immutableIterableCheck(result, 'Reducer must return an instance of Immutable.Iterable. "' + domainName + '" domain "' + action.type + '" action handler result is "' + typeof result + '".');
         domain = domain.set(domainName, result);
       }
     } else if (_isDomainMap2['default'](value)) {
@@ -56,13 +54,14 @@ var iterator = function iterator(domain, action, reducersObj, actionTracker) {
 exports['default'] = function (reducer) {
   _validateReducer2['default'](reducer);
   return function (state, action) {
-    if (!action) {
+    if (typeof action !== 'object') {
       throw new Error('Action parameter value must be an object.');
     }
-    if (action.name) {
-      console.info('Ignoring private action "' + action.name + '". redux-utils does not support name property. Refer to Flux Standard Action');
+    if (action.type && action.type.indexOf('@@') === 0) {
+      console.info('Uh Oh, it looks like you are using ' + action.type + ', which is not supported');
       return state;
     }
+    console.log(action);
     _validateAction2['default'](action);
     var actionTracker = {
       isActionHandled: false

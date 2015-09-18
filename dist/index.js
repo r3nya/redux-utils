@@ -2,8 +2,6 @@
 
 exports.__esModule = true;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
 var _validateReducer = require('./validateReducer');
 
 exports.validateReducer = _validateReducer.validateReducer;
@@ -16,15 +14,11 @@ var _validateAction = require('./validateAction');
 
 exports.validateAction = _validateAction.validateAction;
 
-var _createAction2 = require('./createAction');
+var _createAction = require('./createAction');
 
-var _createAction3 = _interopRequireDefault(_createAction2);
+exports.createAction = _createAction.createAction;
 
-exports.createAction = _createAction3['default'];
+var _combineReducers = require('./combineReducers');
 
-var _combineReducers2 = require('./combineReducers');
-
-var _combineReducers3 = _interopRequireDefault(_combineReducers2);
-
-exports.combineReducers = _combineReducers3['default'];
+exports.combineReducers = _combineReducers.combineReducers;
 //# sourceMappingURL=index.js.map

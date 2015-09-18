@@ -1,6 +1,5 @@
 import _ from './utils'
 import validateActionType from './validateActionType'
-import R from 'ramda'
 
 export default (action) => {
   if (!_.isPlainObject(action)) {
@@ -12,6 +11,7 @@ export default (action) => {
   try {
     validateActionType(action.type)
   } catch (e) {
+    console.log(action)
     throw new Error('Action definition object "type" property value must be a valid action type.')
   }
   if (!_.isUndefined(action.data) && !_.isPlainObject(action.data)) {

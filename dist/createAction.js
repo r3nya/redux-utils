@@ -7,7 +7,7 @@ function createAction(actionName, payload) {
   if (typeof payload === 'undefined' || payload === null || arguments.length === 1) {
     return function () {
       return {
-        name: actionName
+        type: actionName
       };
     };
   }
@@ -16,7 +16,7 @@ function createAction(actionName, payload) {
       var _data;
 
       return {
-        name: actionName,
+        type: actionName,
         data: (_data = {}, _data[payload] = value, _data)
       };
     };
@@ -24,7 +24,7 @@ function createAction(actionName, payload) {
   if (typeof payload === 'object') {
     return function (value) {
       return {
-        name: actionName,
+        type: actionName,
         data: value
       };
     };
@@ -32,7 +32,7 @@ function createAction(actionName, payload) {
   if (typeof payload === 'function') {
     return function () {
       return {
-        name: actionName,
+        type: actionName,
         data: payload.apply(undefined, arguments)
       };
     };

@@ -6,13 +6,13 @@ import R from 'ramda'
 
 export default (reducer) => {
   let actionNames = []
-  if (!isDomainMap(reducer) && _.values(reducer).length > 0) {
+  if (!isDomainMap(reducer) && R.values(reducer).length > 0) {
     throw new Error('Reducer definition object must begin with a domain definition.')
   }
   let iterator = (branch) => {
-    _.forEach(branch, (value, domainName) => {
+    R.mapObjIndexed((value, domainName) => {
       if (isActionMap(value)) {
-        _.forEach(value, (action, name) => {
+        R.mapObjIndexed((action, name) => {
           try {
             validateActionName(name)
           } catch (e) {
@@ -24,13 +24,13 @@ export default (reducer) => {
           if (name !== 'CONSTRUCT') {
             actionNames.push(name)
           }
-        })
+        }, value)
       } else if (isDomainMap(value)) {
         iterator(branch[domainName])
       } else {
         throw new Error('Reducer definition object value object all values must correspond to a function (action map) or an object (domain).')
       }
-    })
+    }, branch)
   }
   iterator(reducer)
 }

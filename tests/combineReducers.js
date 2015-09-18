@@ -68,7 +68,7 @@ describe(`combineReducers`, () => {
       })
     })
   })
-  context(`when an instance of a reducer is called with an action defining a type property with a value beginning with "@@".`, () => {
+  context(`when an instance of a reducer is called with an action defining @@`, () => {
     let spy
 
     beforeEach(() => {
@@ -86,10 +86,10 @@ describe(`combineReducers`, () => {
         })
         let state = Immutable.Map({})
         let action = {
-          name: `any`
+          type: `@@redux/INIT`
         }
         reducer(state, action)
-        expect(spy.calledWithExactly(`Ignoring private action "any". redux-utils does not support name property. Refer to Flux Standard Action`)).to.equal(true)
+        expect(spy.calledWithExactly(`Uh Oh, it looks like you are using @@redux/INIT, which is not supported`)).to.equal(true)
       })
   })
   context(`when action handler produces a value thats not an instance of Immutable.Iterable`, () => {
