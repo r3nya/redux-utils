@@ -3,11 +3,11 @@
 exports.__esModule = true;
 exports['default'] = createAction;
 
-function createAction(actionName, payload) {
+function createAction(actionType, payload) {
   if (typeof payload === 'undefined' || payload === null || arguments.length === 1) {
     return function () {
       return {
-        type: actionName
+        type: actionType
       };
     };
   }
@@ -16,7 +16,7 @@ function createAction(actionName, payload) {
       var _data;
 
       return {
-        type: actionName,
+        type: actionType,
         data: (_data = {}, _data[payload] = value, _data)
       };
     };
@@ -24,7 +24,7 @@ function createAction(actionName, payload) {
   if (typeof payload === 'object') {
     return function (value) {
       return {
-        type: actionName,
+        type: actionType,
         data: value
       };
     };
@@ -32,7 +32,7 @@ function createAction(actionName, payload) {
   if (typeof payload === 'function') {
     return function () {
       return {
-        type: actionName,
+        type: actionType,
         data: payload.apply(undefined, arguments)
       };
     };

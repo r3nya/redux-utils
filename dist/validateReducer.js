@@ -25,7 +25,7 @@ var _ramda = require('ramda');
 var _ramda2 = _interopRequireDefault(_ramda);
 
 exports['default'] = function (reducer) {
-  var actionNames = [];
+  var actionTypes = [];
   if (!_isDomainMap2['default'](reducer) && _ramda2['default'].values(reducer).length > 0) {
     throw new Error('Reducer definition object must begin with a domain definition.');
   }
@@ -38,11 +38,11 @@ exports['default'] = function (reducer) {
           } catch (e) {
             throw new Error('Reducer definition object action handler names must be valid action names.');
           }
-          if (_ramda2['default'].contains(name, actionNames)) {
+          if (_ramda2['default'].contains(name, actionTypes)) {
             throw new Error('Reducer definition object action handler names must be unique.');
           }
           if (name !== 'CONSTRUCT') {
-            actionNames.push(name);
+            actionTypes.push(name);
           }
         }, value);
       } else if (_isDomainMap2['default'](value)) {

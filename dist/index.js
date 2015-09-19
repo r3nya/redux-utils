@@ -2,23 +2,35 @@
 
 exports.__esModule = true;
 
-var _validateReducer = require('./validateReducer');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-exports.validateReducer = _validateReducer.validateReducer;
+var _validateReducer2 = require('./validateReducer');
 
-var _validateActionName = require('./validateActionName');
+var _validateReducer3 = _interopRequireDefault(_validateReducer2);
 
-exports.validateActionName = _validateActionName.validateActionName;
+exports.validateReducer = _validateReducer3['default'];
 
-var _validateAction = require('./validateAction');
+var _validateActionType2 = require('./validateActionType');
 
-exports.validateAction = _validateAction.validateAction;
+var _validateActionType3 = _interopRequireDefault(_validateActionType2);
 
-var _createAction = require('./createAction');
+exports.validateActionType = _validateActionType3['default'];
 
-exports.createAction = _createAction.createAction;
+var _validateAction2 = require('./validateAction');
 
-var _combineReducers = require('./combineReducers');
+var _validateAction3 = _interopRequireDefault(_validateAction2);
 
-exports.combineReducers = _combineReducers.combineReducers;
+exports.validateAction = _validateAction3['default'];
+
+var _createAction2 = require('./createAction');
+
+var _createAction3 = _interopRequireDefault(_createAction2);
+
+exports.createAction = _createAction3['default'];
+
+var _combineReducers2 = require('./combineReducers');
+
+var _combineReducers3 = _interopRequireDefault(_combineReducers2);
+
+exports.combineReducers = _combineReducers3['default'];
 //# sourceMappingURL=index.js.map
