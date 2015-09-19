@@ -50,11 +50,12 @@ function callApi(endpoint, method, headers, body, schema) {
     });
 }
 
-export const CALL_API = 'Call API'
+export const CALL_API = 'CALL_API'
 
 export function isRSAA(action) {
   const validRootKeys = [
-    [CALL_API],
+    CALL_API,
+    'type',
     'payload',
     'meta'
   ];
@@ -99,8 +100,12 @@ export function apiMiddleware({ getState }) {
   return (next) => (action) => {
     const callAPI = action[CALL_API];
     if (!isRSAA(action)) {
+      console.log('The following action is not RSAA')
+      console.log(action)
       return next(action);
     }
+    console.log('The following action is RSAA')
+    console.log(action)
 
     let { endpoint } = callAPI;
     const { method, body, headers, schema, types, bailout } = callAPI;

@@ -5,6 +5,7 @@
   "main": "dist/index.js",
    "scripts": {
     "test": "babel-node ./node_modules/.bin/gulp test",
+    "ctest": "mocha --compilers js:babel/register tests/isRSAA.js",
     "clean": "babel-node ./node_modules/.bin/gulp standard",
     "build": "babel-node ./node_modules/.bin/gulp build"
   },

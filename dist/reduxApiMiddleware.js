@@ -74,12 +74,12 @@ function callApi(endpoint, method, headers, body, schema) {
   });
 }
 
-var CALL_API = 'Call API';
+var CALL_API = 'CALL_API';
 
 exports.CALL_API = CALL_API;
 
 function isRSAA(action) {
-  var validRootKeys = [[CALL_API], 'payload', 'meta'];
+  var validRootKeys = [CALL_API, 'payload', 'meta'];
   var validCallAPIKeys = ['endpoint', 'method', 'types', 'body', 'headers', 'schema', 'bailout'];
   var validMethods = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'];
 
@@ -110,8 +110,12 @@ function apiMiddleware(_ref) {
     return function (action) {
       var callAPI = action[CALL_API];
       if (!isRSAA(action)) {
+        console.log('The following action is not RSAA');
+        console.log(action);
         return next(action);
       }
+      console.log('The following action is RSAA');
+      console.log(action);
 
       var endpoint = callAPI.endpoint;
       var method = callAPI.method;
