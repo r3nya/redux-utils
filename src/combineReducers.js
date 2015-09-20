@@ -38,7 +38,6 @@ export default (reducer) => {
       console.info(`Uh Oh, it looks like you are using ${action.type}, which is not supported`);
       return state;
     }
-    console.log(action)
     validateAction(action)
     let actionTracker = {
       isActionHandled: false

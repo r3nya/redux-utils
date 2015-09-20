@@ -61,7 +61,6 @@ exports['default'] = function (reducer) {
       console.info('Uh Oh, it looks like you are using ' + action.type + ', which is not supported');
       return state;
     }
-    console.log(action);
     _validateAction2['default'](action);
     var actionTracker = {
       isActionHandled: false
