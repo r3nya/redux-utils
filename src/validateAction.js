@@ -25,7 +25,7 @@ export default (action) => {
       throw new Error('Action definition object "error" property value must be true, false or null refer to FSA for more info.')
     }
   }
-  let unknownProperty = _.first(_.difference(_.keys(action), ['type', 'data', 'meta', 'error']))
+  let unknownProperty = _.first(_.difference(_.keys(action), ['CALL_API', 'type', 'data', 'meta', 'error']))
   if (unknownProperty) {
     throw new Error('Action definition object must not define unknown properties. "' + unknownProperty + '" is an unknown property.')
   }

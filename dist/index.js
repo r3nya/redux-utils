@@ -33,9 +33,4 @@ var _combineReducers2 = require('./combineReducers');
 var _combineReducers3 = _interopRequireDefault(_combineReducers2);
 
 exports.combineReducers = _combineReducers3['default'];
-
-var _reduxApiMiddleware = require('./reduxApiMiddleware');
-
-exports.apiMiddleware = _reduxApiMiddleware.apiMiddleware;
-exports.CALL_API = _reduxApiMiddleware.CALL_API;
 //# sourceMappingURL=index.js.map
