@@ -1,0 +1,4 @@
+deploy:
+  provider: npm
+  email: "tjenkins@quantumsolutionsllc.com"
+  api_key: "YrAzwzEHL8Yt8RpSvUFvt"
