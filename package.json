@@ -14,8 +14,8 @@
     "type": "git",
     "url": "git+https://github.com/newtack/redux-utils.git"
   },
-  "author": "Thomas Jenkins and Penguinsoccer",
-  "license": "ISC",
+  "author": "Thomas Jenkins",
+  "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/newtack/redux-utils/issues"
   },
