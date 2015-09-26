@@ -37,4 +37,10 @@ exports.combineReducers = _combineReducers3['default'];
 var _reduxApiMiddleware = require('./reduxApiMiddleware');
 
 exports.apiMiddleware = _reduxApiMiddleware.apiMiddleware;
+
+var _createApiAction2 = require('./createApiAction');
+
+var _createApiAction3 = _interopRequireDefault(_createApiAction2);
+
+exports.createApiAction = _createApiAction3['default'];
 //# sourceMappingURL=index.js.map

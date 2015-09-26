@@ -5,7 +5,8 @@
   "main": "dist/index.js",
    "scripts": {
     "test": "babel-node ./node_modules/.bin/gulp test",
-    "ctest": "mocha --compilers js:babel/register tests/isRSAA.js",
+    "ctest": "mocha --compilers js:babel/register tests/createApiActionTest.js",
+    "cwtest": "mocha -w --compilers js:babel/register tests/createApiActionTest.js",
     "clean": "babel-node ./node_modules/.bin/gulp standard",
     "build": "babel-node ./node_modules/.bin/gulp build"
   },
@@ -13,7 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/newtack/redux-utils.git"
   },
-  "author": "Thomas Jenkins",
+  "author": "Thomas Jenkins and Penguinsoccer",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/newtack/redux-utils/issues"

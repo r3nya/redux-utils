@@ -24,5 +24,5 @@ export default function createAction (actionType, payload) {
       }
     }
   }
-  throw new Error('Invalid call to createAction, payload needs to be string or function')
+  throw new Error('Invalid call to createAction, payload needs to be string, object or function')
 }
