@@ -22,6 +22,10 @@ var _lodashIsplainobject = require('lodash.isplainobject');
 
 var _lodashIsplainobject2 = _interopRequireDefault(_lodashIsplainobject);
 
+var _immutable = require('immutable');
+
+var _immutable2 = _interopRequireDefault(_immutable);
+
 var ApiError = (function (_Error) {
   _inherits(ApiError, _Error);
 
@@ -81,7 +85,7 @@ function apiMiddleware(_ref) {
 
   return function (next) {
     return function (action) {
-      if (getState() instanceof Immutable.Map) {
+      if (getState() instanceof _immutable2['default'].Map) {
         if (getState().get('session') !== undefined) {
           if (getState().get('session').get('token') !== undefined && getState().get('session').get('token') !== null) {
             var token = getState().get('session').get('token');

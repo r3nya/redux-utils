@@ -1,9 +1,9 @@
 {
   "name": "redux-utils",
-  "version": "1.3.1",
+  "version": "1.3.11",
   "description": "Utility functions for redux",
   "main": "dist/index.js",
-   "scripts": {
+  "scripts": {
     "test": "babel-node ./node_modules/.bin/gulp test",
     "ctest": "mocha --compilers js:babel/register tests/createApiActionTest.js",
     "cwtest": "mocha -w --compilers js:babel/register tests/createApiActionTest.js",
@@ -24,14 +24,13 @@
     "babel": "^5.8.23",
     "babel-istanbul": "^0.3.20",
     "coveralls": "^2.11.4",
-    "eslint": "^1.1.0",
+    "eslint": "^1.5.0",
     "nock": "^2.12.0",
     "rimraf": "^2.4.3",
     "tap-spec": "^4.1.0",
     "tape": "^4.2.0",
     "babel-eslint": "^4.1.3",
     "chai": "^3.2.0",
-    "eslint": "^1.5.0",
     "eslint-plugin-react": "^3.4.2",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.2.1",
@@ -48,8 +47,8 @@
     "immutable": "^3.7.5",
     "isomorphic-fetch": "^2.1.1",
     "lodash": "^3.10.1",
-    "ramda": "^0.17.1",
-    "normalizr": "^1.0.0"
+    "normalizr": "^1.0.0",
+    "ramda": "^0.17.1"
   },
   "npmName": "redux-utils",
   "npmFileMap": [
