@@ -81,6 +81,13 @@ function apiMiddleware(_ref) {
 
   return function (next) {
     return function (action) {
+      if (getState() instanceof Immutable.Map) {
+        if (getState().get('session') !== undefined) {
+          if (getState().get('session').get('token') !== undefined && getState().get('session').get('token') !== null) {
+            var token = getState().get('session').get('token');
+          }
+        }
+      }
       var callAPI = action[CALL_API];
       if (typeof callAPI === 'undefined') {
         return next(action);
@@ -93,6 +100,9 @@ function apiMiddleware(_ref) {
       var types = callAPI.types;
       var bailout = callAPI.bailout;
 
+      if (token !== undefined) {
+        headers = { Authorization: 'Bearer ' + token };
+      }
       /*
       if (typeof endpoint === 'function') {
         endpoint = endpoint(getState());

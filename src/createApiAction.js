@@ -1,4 +1,4 @@
-export default createApiAction = (name, endpoint, method, body, headers, rest) => {
+export default (name, endpoint, method, body, headers, rest) => {
   if (body === undefined) {
   return function (...value) {
         return {
