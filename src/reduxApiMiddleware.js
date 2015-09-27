@@ -53,12 +53,22 @@ export const CALL_API = 'CALL_API'
 
 export function apiMiddleware({ getState }) {
   return (next) => (action) => {
+    if (getState() instanceof Immutable.Map) {
+      if (getState().get('session') !== undefined) {
+        if (getState().get('session').get('token') !== undefined && getState().get('session').get('token') !== null) {
+          var token = getState().get('session').get('token')
+        }
+      }
+    }
     const callAPI = action[CALL_API];
     if (typeof callAPI === 'undefined') {
       return next(action);
     }
     let { endpoint } = callAPI;
-    const { method, body, headers, schema, types, bailout } = callAPI;
+    let { method, body, headers, schema, types, bailout } = callAPI;
+    if (token !== undefined) {
+      headers = {Authorization: `Bearer ${token}`}    
+    }
     /*
     if (typeof endpoint === 'function') {
       endpoint = endpoint(getState());
