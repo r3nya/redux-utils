@@ -14,8 +14,8 @@ export default (action) => {
     console.log(action)
     throw new Error('Action definition object "type" property value must be a valid action type.')
   }
-  if (!_.isUndefined(action.data) && !_.isPlainObject(action.data)) {
-    throw new Error('Action definition object "data" property value must be a plain object.')
+  if (!_.isUndefined(action.payload) && !_.isPlainObject(action.payload)) {
+    throw new Error('Action definition object "payload" property value must be a plain object.')
   }
   if (!_.isUndefined(action.meta) && !_.isPlainObject(action.meta)) {
     throw new Error('Action definition object "meta" property value must be a plain object.')
@@ -25,7 +25,7 @@ export default (action) => {
       throw new Error('Action definition object "error" property value must be true, false or null refer to FSA for more info.')
     }
   }
-  let unknownProperty = _.first(_.difference(_.keys(action), ['CALL_API', 'payload', 'type', 'data', 'meta', 'error']))
+  let unknownProperty = _.first(_.difference(_.keys(action), ['CALL_API', 'payload', 'type', 'meta', 'error']))
   if (unknownProperty) {
     throw new Error('Action definition object must not define unknown properties. "' + unknownProperty + '" is an unknown property.')
   }

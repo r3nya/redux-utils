@@ -13,11 +13,11 @@ function createAction(actionType, payload) {
   }
   if (typeof payload === 'string') {
     return function (value) {
-      var _data;
+      var _payload;
 
       return {
         type: actionType,
-        data: (_data = {}, _data[payload] = value, _data)
+        payload: (_payload = {}, _payload[payload] = value, _payload)
       };
     };
   }
@@ -25,7 +25,7 @@ function createAction(actionType, payload) {
     return function (value) {
       return {
         type: actionType,
-        data: value
+        payload: value
       };
     };
   }
@@ -33,7 +33,7 @@ function createAction(actionType, payload) {
     return function () {
       return {
         type: actionType,
-        data: payload.apply(undefined, arguments)
+        payload: payload.apply(undefined, arguments)
       };
     };
   }

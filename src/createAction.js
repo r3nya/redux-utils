@@ -7,20 +7,20 @@ export default function createAction (actionType, payload) {
   if (typeof payload === 'string') {
     return (value) => ({
       type: actionType,
-      data: {[payload]: value}
+      payload: {[payload]: value}
     })
   }
   if (typeof payload === 'object') {
     return (value) => ({
       type: actionType,
-      data: value
+      payload: value
     })
   }
   if (typeof payload === 'function') {
     return function (...value) {
       return {
         type: actionType,
-        data: payload(...value)
+        payload: payload(...value)
       }
     }
   }

@@ -25,8 +25,8 @@ exports['default'] = function (action) {
     console.log(action);
     throw new Error('Action definition object "type" property value must be a valid action type.');
   }
-  if (!_utils2['default'].isUndefined(action.data) && !_utils2['default'].isPlainObject(action.data)) {
-    throw new Error('Action definition object "data" property value must be a plain object.');
+  if (!_utils2['default'].isUndefined(action.payload) && !_utils2['default'].isPlainObject(action.payload)) {
+    throw new Error('Action definition object "payload" property value must be a plain object.');
   }
   if (!_utils2['default'].isUndefined(action.meta) && !_utils2['default'].isPlainObject(action.meta)) {
     throw new Error('Action definition object "meta" property value must be a plain object.');
@@ -36,7 +36,7 @@ exports['default'] = function (action) {
       throw new Error('Action definition object "error" property value must be true, false or null refer to FSA for more info.');
     }
   }
-  var unknownProperty = _utils2['default'].first(_utils2['default'].difference(_utils2['default'].keys(action), ['CALL_API', 'payload', 'type', 'data', 'meta', 'error']));
+  var unknownProperty = _utils2['default'].first(_utils2['default'].difference(_utils2['default'].keys(action), ['CALL_API', 'payload', 'type', 'meta', 'error']));
   if (unknownProperty) {
     throw new Error('Action definition object must not define unknown properties. "' + unknownProperty + '" is an unknown property.');
   }

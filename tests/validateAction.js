@@ -34,11 +34,11 @@ describe('validateAction()', () => {
     )
 
     describeValidateActionThrow(
-      '"data" property is present and it is not a plain object',
-      'Action definition object "data" property value must be a plain object.',
+      '"payload" property is present and it is not a plain object',
+      'Action definition object "payload" property value must be a plain object.',
       {
         type: 'FOO',
-        data: 'not object'
+        payload: 'not object'
       }
     )
 

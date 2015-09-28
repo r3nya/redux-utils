@@ -54,7 +54,18 @@ This will make
         }
     }
 
-Now, `createApiAction(name, endpoint, method, body, rest(not Implemented yet))` 
+In order to get the api calls to actually work, you need to apply this middleware.
+
+Example: 
+
+    import { apiMiddleware } from 'redux-utils'
+    const createStoreWithMiddleware = applyMiddleware(
+      thunkMiddleware,
+      loggerMiddleware,
+      apiMiddleware
+    )(createStore);
+
+Now, `createApiAction(name, endpoint, method, body, rest(not Implemented yet))`
 
 `let createFetchSubmissionsAction = createApiAction('POSTS','api/posts', 'GET')`
 
@@ -71,6 +82,17 @@ Now lets have a slightly more complex api call
     })
     
 This creates `LOGIN_REQUEST`, `LOGIN_SUCCESS` and `LOGIN_FAILURE` which you can use with reducers. In order to call createLoginAction, you pass in a username and a password which are sent in the body of the request as a JSON object. Simple.
+
+Combine reducers is a function from [redux-immutable](https://github.com/gajus/redux-immutable) with minor changes to make it FSA standard. 
+
+The example below starts a store with the `CONSTRUCT` reducers. The import of reducers is different than normal so in order to use this, you need to check out the documentation of [redux-immutable](https://github.com/gajus/redux-immutable).
+
+    let reducer = combineReducers(reducers)
+    let state = Immutable.Map({})
+    state = reducer(state, {type: `CONSTRUCT`})
+    const Store = createStoreWithMiddleware(reducer, state)
+
+All functions and middleware is imported with {} around it, there is no default export.
 
 ---
 
