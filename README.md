@@ -5,6 +5,7 @@ Redux-utils is a simple library combining
 [redux-immutable](https://github.com/gajus/redux-immutable) and
 [redux-api-middleware](https://github.com/agraboso/redux-api-middleware).
 It also adds two simple custom functions for creating actions and api call actions.
+
 ---
 ##### Installation
 
