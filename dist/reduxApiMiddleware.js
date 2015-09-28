@@ -18,10 +18,6 @@ var _isomorphicFetch = require('isomorphic-fetch');
 
 var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
-var _lodashIsplainobject = require('lodash.isplainobject');
-
-var _lodashIsplainobject2 = _interopRequireDefault(_lodashIsplainobject);
-
 var _immutable = require('immutable');
 
 var _immutable2 = _interopRequireDefault(_immutable);

@@ -1,6 +1,5 @@
 import { normalize, Schema } from 'normalizr';
 import fetch from 'isomorphic-fetch';
-import isPlainObject from 'lodash.isplainobject';
 import Immutable from 'immutable'
 
 class ApiError extends Error {
