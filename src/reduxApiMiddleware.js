@@ -67,7 +67,7 @@ export function apiMiddleware({ getState }) {
     }
     let { endpoint } = callAPI;
     let { method, body, headers, schema, types, bailout } = callAPI;
-    if (token !== undefined) {
+    if (token !== undefined && token !== '' && token !== null) {
       headers = {Authorization: `Bearer ${token}`}    
     }
     /*

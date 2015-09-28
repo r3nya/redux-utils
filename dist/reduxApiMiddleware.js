@@ -104,7 +104,7 @@ function apiMiddleware(_ref) {
       var types = callAPI.types;
       var bailout = callAPI.bailout;
 
-      if (token !== undefined) {
+      if (token !== undefined && token !== '' && token !== null) {
         headers = { Authorization: 'Bearer ' + token };
       }
       /*
