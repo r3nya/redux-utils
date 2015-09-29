@@ -1,6 +1,6 @@
 /* @flow weak */
 export default (name, endpoint, method, body, headers, rest) => {
-  if (body === undefined) {
+  if (body === undefined && typeof endpoint === 'string') {
   return function () {
         return {
           type: 'CALL_API',
@@ -24,7 +24,7 @@ export default (name, endpoint, method, body, headers, rest) => {
           }
         }
     }
-  }	else if (typeof body === 'string' && typeof endpoint === 'function') {
+  } else if (typeof endpoint === 'function' && body === undefined) {
     return function () {
         return {
           type: 'CALL_API',
@@ -32,7 +32,6 @@ export default (name, endpoint, method, body, headers, rest) => {
             types: [`${name}_REQUEST`, `${name}_SUCCESS`, `${name}_FAILURE`],
             endpoint: endpoint(...arguments),
             method: method,
-            headers: {'Content-Type': 'application/json'},
             body: body
           }
         }
