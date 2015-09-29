@@ -1,15 +1,16 @@
+/* @flow */
 import _ from './utils'
 import validateActionType from './validateActionType'
 import isDomainMap from './isDomainMap'
 import isActionMap from './isActionMap'
 import R from 'ramda'
 
-export default (reducer) => {
-  let actionTypes = []
+export default (reducer: Object) => {
+  let actionTypes: Array<string> = []
   if (!isDomainMap(reducer) && R.values(reducer).length > 0) {
     throw new Error('Reducer definition object must begin with a domain definition.')
   }
-  let iterator = (branch) => {
+  let iterator: Function = (branch) => {
     R.mapObjIndexed((value, domainName) => {
       if (isActionMap(value)) {
         R.mapObjIndexed((action, name) => {

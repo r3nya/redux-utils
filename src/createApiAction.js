@@ -1,3 +1,4 @@
+/* @flow weak */
 export default (name, endpoint, method, body, headers, rest) => {
   if (body === undefined) {
   return function () {

@@ -1,3 +1,4 @@
+/* @flow weak */
 export default function createAction (actionType, payload) {
   if (typeof payload === 'undefined' || payload === null || arguments.length === 1) {
     return () => ({

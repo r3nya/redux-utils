@@ -1,7 +1,8 @@
+/* @flow */
 import _ from './utils'
 import validateActionType from './validateActionType'
 
-export default (action) => {
+export default (action: {type: string; payload: Object; meta: Object; error: any}) => {
   if (!_.isPlainObject(action)) {
     throw new Error('Action definition must be a plain object.')
   }
@@ -25,7 +26,7 @@ export default (action) => {
       throw new Error('Action definition object "error" property value must be true, false or null refer to FSA for more info.')
     }
   }
-  let unknownProperty = _.first(_.difference(_.keys(action), ['CALL_API', 'payload', 'type', 'meta', 'error']))
+  let unknownProperty: any = _.first(_.difference(_.keys(action), ['CALL_API', 'payload', 'type', 'meta', 'error']))
   if (unknownProperty) {
     throw new Error('Action definition object must not define unknown properties. "' + unknownProperty + '" is an unknown property.')
   }

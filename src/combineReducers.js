@@ -1,3 +1,4 @@
+/* @flow weak */
 import Immutable from 'immutable'
 import validateReducer from './validateReducer'
 import validateAction from './validateAction'

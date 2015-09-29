@@ -1,8 +1,12 @@
+/* @flow weak */
 import { normalize, Schema } from 'normalizr';
 import fetch from 'isomorphic-fetch';
 import Immutable from 'immutable'
 
 class ApiError extends Error {
+  status: any;
+  statusText: string;
+  response: Object;
   constructor(status, statusText, response) {
     super();
     this.name = 'ApiError';
@@ -83,7 +87,7 @@ export function apiMiddleware({ getState }) {
       delete finalAction[CALL_API];
       return finalAction;
     }
-    const [requestType, successType, failureType] = types;
+    let [requestType, successType, failureType] = types;
     next(actionWith({ type: requestType }));
     return callApi(endpoint, method, headers, body, schema).then(
       (response) => next(actionWith({ type: successType }, response)),
