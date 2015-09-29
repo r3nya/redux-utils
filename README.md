@@ -8,7 +8,7 @@ It combines
 [redux-api-middleware](https://github.com/agraboso/redux-api-middleware).
 It also adds two simple custom functions for creating actions and api call actions.
 
-[Click here](https://github.com/gajus/redux-immutable) for an example recreating the redux async example with far less code.
+[Click here](https://github.com/penguinsoccer/redux-utils-example) for an example recreating the redux async example with far less code.
 
 ---
 ##### Installation
