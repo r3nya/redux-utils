@@ -37,7 +37,6 @@ export default (name, endpoint, method, body, headers, rest) => {
         }
     }
   } else {
-    let stringified = JSON.stringify(body)
     return function () {
         return {
           type: 'CALL_API',
@@ -46,7 +45,7 @@ export default (name, endpoint, method, body, headers, rest) => {
             endpoint: endpoint,
             method: method,
             headers: {'Content-Type': 'application/json'},
-            body: stringified
+            body: body
           }
         }
     }

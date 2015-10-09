@@ -1,29 +1,19 @@
-/* @flow weak */
-export default function createAction (actionType, payload) {
-  if (typeof payload === 'undefined' || payload === null || arguments.length === 1) {
-    return () => ({
-      type: actionType
-    })
+/* @flow */
+import { merge, every } from './utils'
+
+export default function(type: string) {
+  if(!every(arguments, v => typeof v === 'string')) {
+    throw new TypeError('ActionCreator only takes strings as input')
   }
-  if (typeof payload === 'string') {
-    return (value) => ({
-      type: actionType,
-      payload: {[payload]: value}
-    })
-  }
-  if (typeof payload === 'object') {
-    return (value) => ({
-      type: actionType,
-      payload: value
-    })
-  }
-  if (typeof payload === 'function') {
-    return function (...value) {
-      return {
-        type: actionType,
-        payload: payload(...value)
-      }
+  let props = Array.isArray(arguments[1]) ? arguments[1] : Array.prototype.slice.call(arguments, 1)
+  return () => {
+    if (!props.length) {
+      return {type: type}
     }
+    let payloadObj: Object = {payload: {}}
+    return merge(props.reduce((action: Object, prop: Array, index: number) => {
+      action.payload[prop] = prop, action
+      return action
+    }, {payload: {}}), {type: type})
   }
-  throw new Error('Invalid call to createAction, payload needs to be string, object or function')
 }

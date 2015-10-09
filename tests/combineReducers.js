@@ -68,30 +68,6 @@ describe(`combineReducers`, () => {
       })
     })
   })
-  context(`when an instance of a reducer is called with an action defining @@`, () => {
-    let spy
-
-    beforeEach(() => {
-      spy = sinon.stub(console, `info`)
-    })
-    afterEach(() => {
-      console.info.restore()
-    })
-      it(`produces console.info message`, () => {
-        let reducer = combineReducers({
-          foos: {
-            FOO: () => {
-            }
-          }
-        })
-        let state = Immutable.Map({})
-        let action = {
-          type: `@@redux/INIT`
-        }
-        reducer(state, action)
-        expect(spy.calledWithExactly(`Uh Oh, it looks like you are using @@redux/INIT, which is not supported`)).to.equal(true)
-      })
-  })
   context(`when action handler produces a value thats not an instance of Immutable.Iterable`, () => {
     it(`throws an error`, () => {
       let action,
@@ -165,6 +141,21 @@ describe(`combineReducers`, () => {
       reducer(state, {type: `FOO`})
 
       expect(state.get(`foos`).get(`bar`)).to.equal(1)
+    })
+  })
+  context('when foo foo', () => {
+    it('should foo', () => {
+      let reducers = {
+        session: {
+          CONSTRUCT: function() {
+            return Immutable.fromJS({
+              foo: 'bar'
+            })
+          }
+        }
+      }
+      let reducer = combineReducers(reducers)
+      expect(1).to.equal(1)
     })
   })
 })

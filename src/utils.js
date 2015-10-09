@@ -1,7 +1,7 @@
 import { isFunction, isString, isPlainObject, isObject, isUndefined } from 'lodash/lang'
 import { indexOf, first, difference } from 'lodash/array'
-import { every, forEach } from 'lodash/collection'
-import { has, values, keys } from 'lodash/object'
+import { every, forEach, includes } from 'lodash/collection'
+import { has, values, keys, merge } from 'lodash/object'
 
 export default {
   isUndefined,
@@ -16,5 +16,7 @@ export default {
   every,
   indexOf,
   forEach,
-  has
+  has,
+  merge,
+  includes
 }

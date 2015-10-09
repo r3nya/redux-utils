@@ -1,6 +1,6 @@
 /* @flow */
-import _ from './utils'
+import { every, isFunction } from './utils'
 
 export default (map: Object) => {
-  return _.every(map, _.isFunction)
+  return every(map, isFunction)
 }

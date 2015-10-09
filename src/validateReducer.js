@@ -1,5 +1,5 @@
 /* @flow */
-import _ from './utils'
+import { forEach, includes } from './utils'
 import validateActionType from './validateActionType'
 import isDomainMap from './isDomainMap'
 import isActionMap from './isActionMap'
@@ -8,30 +8,30 @@ import R from 'ramda'
 export default (reducer: Object) => {
   let actionTypes: Array<string> = []
   if (!isDomainMap(reducer) && R.values(reducer).length > 0) {
-    throw new Error('Reducer definition object must begin with a domain definition.')
+    throw new TypeError('Reducer definition object must begin with a domain definition.')
   }
   let iterator: Function = (branch) => {
-    R.mapObjIndexed((value, domainName) => {
+    forEach(branch, (value, domainName) => {
       if (isActionMap(value)) {
-        R.mapObjIndexed((action, name) => {
+        forEach(value, (action, name) => {
           try {
             validateActionType(name)
           } catch (e) {
-            throw new Error('Reducer definition object action handler names must be valid action names.')
+            throw new TypeError('Reducer definition object action handler names must be valid action names.')
           }
-          if (R.contains(name, actionTypes)) {
-            throw new Error('Reducer definition object action handler names must be unique.')
+          if (includes(actionTypes, name)) {
+            throw new TypeError('Reducer definition object action handler names must be unique.')
           }
           if (name !== 'CONSTRUCT') {
             actionTypes.push(name)
           }
-        }, value)
+        })
       } else if (isDomainMap(value)) {
         iterator(branch[domainName])
       } else {
         throw new Error('Reducer definition object value object all values must correspond to a function (action map) or an object (domain).')
       }
-    }, branch)
+    })
   }
   iterator(reducer)
 }
