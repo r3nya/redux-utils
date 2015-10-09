@@ -38,12 +38,7 @@ This will make
 
 If you want more than just one parameter
 
-    let action = createAction('FOO', function(user, pwd){
-    return {
-            userName : user,
-            password : pwd
-        }
-    })
+        let action = createAction('FOO', 'user', 'pwd')
 This will make 
 
     let action = (user, pwd) => {
