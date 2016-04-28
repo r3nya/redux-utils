@@ -17,6 +17,11 @@ It also adds two simple custom functions for creating actions and api call actio
 
 ---
 
+#### Quick Note
+This package is currently unmaintained if you would like to maintain it, let me know :)
+
+---
+
 ##### Usage 
 
 The two custom functions that come with redux-utils are `createAction` and `createApiAction`. They do what their names says.
