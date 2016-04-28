@@ -36,6 +36,18 @@ export default (name, endpoint, method, body, headers, rest) => {
           }
         }
     }
+  } else if (typeof endpoint === 'function' && typeof body === 'function') {
+    return function () {
+      return {
+        type: 'CALL_API',
+        CALL_API: {
+          types: [`${name}_REQUEST`, `${name}_SUCCESS`, `${name}_FAILURE`],
+          endpoint: endpoint(...arguments),
+          method: method,
+          body: body(...arguments)
+        }
+      }
+    }
   } else {
     return function () {
         return {
