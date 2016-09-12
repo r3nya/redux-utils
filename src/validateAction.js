@@ -22,7 +22,7 @@ export default (action: {type: string; payload: Object; meta: Object; error: any
     throw new TypeError('Action definition object "meta" property value must be a plain object.')
   }
   if (!_.isUndefined(action.error)) {
-    if (action.error !== true || action.error !== false || action.error !== null) {
+    if (action.error !== true && action.error !== false && action.error !== null) {
       throw new TypeError('Action definition object "error" property value must be true, false or null refer to FSA for more info.')
     }
   }
