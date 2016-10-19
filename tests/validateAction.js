@@ -60,6 +60,16 @@ describe('validateAction()', () => {
       }
     )
 
+    context('"error" property is present and it is a Boolean or null', () => {
+      it('does not throw an error', () => {
+        expect(() => {
+          validateAction({ type: 'FOO', error: true });
+          validateAction({ type: 'FOO', error: false });
+          validateAction({ type: 'FOO', error: null });
+        }).to.not.throw(Error)
+      })
+    })
+
     describeValidateActionThrow(
       'defines unknown properties',
       'Action definition object must not define unknown properties. "foo" is an unknown property.',
