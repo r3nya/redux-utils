@@ -15,13 +15,6 @@ It also adds two simple custom functions for creating actions and api call actio
 
 `npm install redux-utils`
 
----
-
-#### Quick Note
-This package is currently unmaintained if you would like to maintain it, let me know :)
-
----
-
 ##### Usage 
 
 The two custom functions that come with redux-utils are `createAction` and `createApiAction`. They do what their names says.
@@ -100,3 +93,6 @@ All functions and middleware is imported with {} around it, there is no default 
 
 There is a currently a feature in the middleware where if you have an Immutable store and have a session object with token inside, it will use the token as part of the api call and place it in the header of the request. This will be worked on more.
 
+
+#### Current maintainers:
+[Divoolej](https://github.com/Divoolej)
